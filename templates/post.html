@@ -12,7 +12,7 @@
             {% endif %}
             <h1>{{ post.title }}</h1>
             <div class="post-meta">
-                <span class="author">{{ post.author_name }}</span>
+                <a href="{{ url_for('profile.view_profile', username=post.author_name) }}" class="author">{{ post.author_name }}</a>
                 <span class="dot"></span>
                 <span>{{ post.created_at[:10] }}</span>
                 <span class="dot"></span>
