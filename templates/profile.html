@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }} — VulnPy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="profile-page">
+        <div class="profile-header">
+            <div class="profile-avatar">{{ user.username[0]|upper }}</div>
+            <div class="profile-info">
+                <h1>{{ user.username }}</h1>
+                <span class="role-badge role-{{ user.role }}">{{ user.role }}</span>
+                <p class="text-muted mt-1">Joined {{ user.created_at[:10] }}</p>
+            </div>
+            {% if session.get('user_id') %}
+            <a href="{{ url_for('profile.edit_profile', username=user.username) }}" class="btn btn-ghost btn-sm" style="margin-left:auto">Edit Profile</a>
+            {% endif %}
+        </div>
+
+        <div class="profile-bio">
+            <h3>About</h3>
+            {# VULN: CWE-79 (Stored XSS), OWASP A03
+               Bio is rendered with |safe — any HTML/JS stored in the bio field
+               executes in the browser when viewing the profile. #}
+            <p>{{ user.bio | safe if user.bio else "This user hasn't written a bio yet." }}</p>
+        </div>
+
+        {% if posts %}
+        <div class="profile-posts">
+            <h3>Posts by {{ user.username }}</h3>
+            <div class="post-grid">
+                {% for post in posts %}
+                <article class="post-card">
+                    <div class="post-meta">
+                        <span>{{ post.created_at[:10] }}</span>
+                        <span class="dot"></span>
+                        <span>{{ post.reading_time }} min read</span>
+                    </div>
+                    <h2><a href="{{ url_for('blog.post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
+                    <p class="excerpt">{{ post.body[:140] }}{% if post.body|length > 140 %}…{% endif %}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

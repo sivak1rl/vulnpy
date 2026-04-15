@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}File Upload — VulnPy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="tools-page">
+        <h1>File Upload</h1>
+        <p class="subtitle">Attach images or files to share with the community.</p>
+
+        <div class="tool-card">
+            <h3>📎 Upload a File</h3>
+            <p class="description">Select a file to upload. Supported formats: images, documents, and more.</p>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Choose file</label>
+                    <input type="file" id="file" name="file">
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+
+        {% if files %}
+        <div class="tool-card">
+            <h3>📁 Uploaded Files</h3>
+            <div class="file-list">
+                {% for f in files %}
+                <div class="file-item">
+                    <a href="{{ url_for('upload.serve_upload', filename=f) }}">{{ f }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

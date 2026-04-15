@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Debug Info — VulnPy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="debug-page">
+        <div class="admin-header">
+            <h1>Debug Information</h1>
+            <span class="admin-badge">Debug</span>
+        </div>
+
+        <div class="debug-section">
+            <h2>System</h2>
+            <div class="debug-table-wrap">
+                <table class="admin-table">
+                    {% for key, val in sys_info.items() %}
+                    <tr>
+                        <td class="debug-key">{{ key }}</td>
+                        <td>{{ val }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <div class="debug-section">
+            <h2>Application Config</h2>
+            <div class="debug-table-wrap">
+                <table class="admin-table">
+                    {% for key, val in app_config.items()|sort %}
+                    <tr>
+                        <td class="debug-key">{{ key }}</td>
+                        <td><code>{{ val }}</code></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <div class="debug-section">
+            <h2>Database Schema</h2>
+            {% for table, columns in db_info.items() %}
+            <h3 class="mt-2">{{ table }}</h3>
+            <div class="debug-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Column</th>
+                            <th>Type</th>
+                            <th>Not Null</th>
+                            <th>PK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for col in columns %}
+                        <tr>
+                            <td>{{ col.name }}</td>
+                            <td><code>{{ col.type }}</code></td>
+                            <td>{{ '✓' if col.notnull else '' }}</td>
+                            <td>{{ '✓' if col.pk else '' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="debug-section">
+            <h2>Environment Variables</h2>
+            <div class="debug-table-wrap">
+                <table class="admin-table">
+                    {% for key, val in env_vars.items()|sort %}
+                    <tr>
+                        <td class="debug-key">{{ key }}</td>
+                        <td class="debug-val"><code>{{ val[:200] }}{{ '…' if val|length > 200 }}</code></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Weather Widget — VulnPy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="tools-page">
+        <h1>Weather Widget</h1>
+        <p class="subtitle">Fetch weather data from any URL — our server retrieves it for you.</p>
+
+        <div class="tool-card">
+            <h3>🌤 Fetch URL</h3>
+            <p class="description">Enter a weather API URL to fetch data from. The server will make the request on your behalf.</p>
+            <form method="GET">
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="text" id="url" name="url" placeholder="https://api.example.com/weather?city=london" value="{{ url }}">
+                </div>
+                <button type="submit" class="btn btn-orange">Fetch</button>
+            </form>
+
+            {% if error %}
+            <div class="flash flash-error mt-2">{{ error }}</div>
+            {% endif %}
+
+            {% if result %}
+            <div class="tool-output-section mt-2">
+                <div class="response-meta">
+                    <span class="status-badge {% if result.status_code == 200 %}status-published{% else %}status-draft{% endif %}">
+                        HTTP {{ result.status_code }}
+                    </span>
+                </div>
+                <div class="tool-output mt-1">{{ result.body }}</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

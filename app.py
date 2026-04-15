@@ -19,12 +19,17 @@ def create_app():
         database.init_db()
 
     # Register blueprints
-    from blueprints import blog, auth, admin, nettools
+    from blueprints import blog, auth, admin, nettools, profile, search, debug, upload, weather
 
     app.register_blueprint(blog.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(admin.bp)
     app.register_blueprint(nettools.bp)
+    app.register_blueprint(profile.bp)
+    app.register_blueprint(search.bp)
+    app.register_blueprint(debug.bp)
+    app.register_blueprint(upload.bp)
+    app.register_blueprint(weather.bp)
 
     return app
 

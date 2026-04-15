@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Search — VulnPy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="search-page">
+        <div class="page-header">
+            <h1>Search</h1>
+            <p class="subtitle">Find posts across the blog.</p>
+        </div>
+
+        <form method="GET" action="{{ url_for('search.search') }}" class="search-bar">
+            <input type="text" name="q" value="{{ q }}" placeholder="Search posts…" autofocus>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        {% if error %}
+        <div class="flash flash-error mt-2">{{ error }}</div>
+        {% endif %}
+
+        {% if q %}
+        <p class="text-muted mt-2">{{ results|length }} result{{ 's' if results|length != 1 }} for "{{ q }}"</p>
+        {% endif %}
+
+        {% if results %}
+        <div class="post-grid mt-2">
+            {% for post in results %}
+            <article class="post-card">
+                <div class="post-meta">
+                    <span class="author">{{ post.author_name }}</span>
+                    <span class="dot"></span>
+                    <span>{{ post.created_at[:10] }}</span>
+                </div>
+                <h2><a href="{{ url_for('blog.post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
+                <p class="excerpt">{{ post.body[:160] }}{% if post.body|length > 160 %}…{% endif %}</p>
+            </article>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
