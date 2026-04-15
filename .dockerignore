@@ -1,0 +1,5 @@
+vulnpy.db
+uploads/*
+__pycache__
+*.pyc
+.git

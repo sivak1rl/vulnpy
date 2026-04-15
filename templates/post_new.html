@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}New Post — VulnPy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="editor-page">
+        <h1>New Post</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Post title" required>
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <input type="text" id="tags" name="tags" placeholder="security, owasp, web (comma separated)">
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="body">Content</label>
+                <textarea id="body" name="body" placeholder="Write your post…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Publish</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

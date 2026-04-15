@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Create Account — VulnPy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="form-card">
+        <h2>Create Account</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Choose a password" required>
+            </div>
+            <div class="form-footer">
+                <button type="submit" class="btn btn-primary">Create Account</button>
+                <a href="{{ url_for('auth.login') }}" class="link">Already have an account? →</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

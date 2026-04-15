@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}VulnPy — Blog{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="page-header">
+        <h1>Latest Posts</h1>
+        <p class="subtitle">Thoughts on security, development, and the web.</p>
+    </div>
+
+    <div class="post-grid">
+        {% for post in posts %}
+        <article class="post-card">
+            <div class="post-meta">
+                <span class="author">{{ post.author_name }}</span>
+                <span class="dot"></span>
+                <span>{{ post.created_at[:10] }}</span>
+                <span class="dot"></span>
+                <span>{{ post.reading_time }} min read</span>
+            </div>
+            <h2><a href="{{ url_for('blog.post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p class="excerpt">{{ post.body[:180] }}{% if post.body|length > 180 %}…{% endif %}</p>
+            {% if post.tags %}
+            <div class="post-tags">
+                {% for tag in post.tags.split(',') %}
+                <span class="tag">{{ tag.strip() }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

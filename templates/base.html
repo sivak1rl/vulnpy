@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VulnPy{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="wrapper">
+            <a href="{{ url_for('blog.index') }}" class="nav-brand">
+                <span>Vuln</span><span class="accent">Py</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
+                <li><a href="{{ url_for('nettools.ping') }}">Net Tools</a></li>
+                {% if session.get('user_id') %}
+                    <li><a href="{{ url_for('blog.new_post') }}">New Post</a></li>
+                    <li><a href="{{ url_for('admin.dashboard') }}">Admin</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}" class="btn-ghost btn-sm">Logout ({{ session.username }})</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}" class="nav-cta">Sign In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="wrapper flash-messages">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrapper">
+            <div class="warning">⚠ Educational use only — do not expose to the internet</div>
+            <div>VulnPy — Intentionally Vulnerable Web Application</div>
+        </div>
+    </footer>
+</body>
+</html>

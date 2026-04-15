@@ -1,0 +1,22 @@
+# ⚠ WARNING: This application is intentionally vulnerable.
+# Do NOT expose it to the public internet.
+
+services:
+  vulnpy:
+    build: .
+    ports:
+      - "127.0.0.1:5000:5000"   # Bind to localhost only
+    volumes:
+      - uploads:/app/uploads
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    # Re-add NET_RAW so ping works inside the container
+    cap_add:
+      - NET_RAW
+
+volumes:
+  uploads:
