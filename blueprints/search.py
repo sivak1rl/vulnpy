@@ -13,7 +13,7 @@ def search():
     if q:
         # VULN: CWE-89 (SQL Injection), OWASP A03
         # Search query is interpolated directly into SQL.
-        # UNION-based injection: ' UNION SELECT id,username,password,bio,role,created_at FROM users --
+        # UNION-based injection: %') UNION SELECT id,username,password,bio,role,created_at FROM users --
         db = get_db()
         query = (
             "SELECT p.id, p.title, p.body, p.tags, p.created_at, u.username as author_name "

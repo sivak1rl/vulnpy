@@ -24,7 +24,7 @@
       "cwe": "CWE-89",
       "severity": "Critical",
       "description": "The search query parameter is interpolated into a SQL LIKE clause. UNION-based injection can extract data from other tables.",
-      "hint": "Try: ' UNION SELECT id,username,password,bio,role,created_at FROM users --",
+      "hint": "Try: %') UNION SELECT id,username,password,bio,role,created_at FROM users --",
       "file": "blueprints/search.py",
       "fix": "Use parameterized queries with ? placeholders."
     },
